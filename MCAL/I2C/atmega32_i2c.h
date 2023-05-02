@@ -30,6 +30,10 @@
 #define SLAVE_DATA_RECEIVED      0x80 /* means that a byte is received */
 #define SLAVE_BYTE_TRANSMITTED   0xB8 /* means that the written byte is transmitted */
 
+#define I2C_Ready		0
+#define Busy_In_Tx		1
+#define Busy_In_Rx		2
+
 
 #define I2C_Mode_Sync		1
 #define I2C_Mode_Async		0
@@ -50,17 +54,29 @@ typedef struct
 	uint8_t I2C_Mode;
 	uint8_t I2C_Prescaler;
 	uint8_t I2C_Ack;
-	uint8_t SCL_Speed;
 	uint8_t GenralCall_Status;
 }I2C_Config_t;
 
+typedef struct
+{
+	I2C_Config_t 	pI2C_Config;
+	uint8_t 		*pTxBuffer; /* !< To store the app. Tx buffer address > */
+	uint8_t 		*pRxBuffer;	/* !< To store the app. Rx buffer address > */
+	uint32_t 		TxLen;		/* !< To store Tx len > */
+	uint32_t 		RxLen;		/* !< To store Tx len > */
+	uint8_t 		TxRxState;	/* !< To store Communication state > */
+	uint8_t 		DevAddr;	/* !< To store slave/device address > */
+    uint32_t        RxSize;		/* !< To store Rx size  > */
+    uint8_t         Sr;			/* !< To store repeated start value  > */
+}I2C_Handle_t;
 
-void I2C_Init(I2C_Config_t *pI2C_Config);
-void I2C_SendStartCond(void);
-void I2C_SendStopCond(void);
-void I2C_MasterSendData(I2C_Config_t *pI2C_Config,uint8_t *pTxBuffer,uint8_t Length,uint8_t Address);
-void I2C_MasterRecieveData(I2C_Config_t *pI2C_Config,uint8_t *pRxBuffer,uint8_t Length, uint8_t Address);
+void I2C_Init(I2C_Handle_t *pI2C_Handle);
+void I2C_MasterSendData(uint8_t *pTxBuffer,uint8_t Length,uint8_t Address);
+void I2C_MasterRecieveData(uint8_t *pRxBuffer,uint8_t Length, uint8_t Address);
 
 
+uint8_t I2C_MasterSendDataIT(I2C_Handle_t *pI2C_Handle,uint8_t *pRxBuffer,uint8_t Length , uint8_t Address);
+uint8_t I2C_MasterRecieveDataIT(I2C_Handle_t *pI2C_Handle,uint8_t *pRxBuffer,uint8_t Length, uint8_t Address);
 
+void I2C_ISRHandler(I2C_Handle_t *pI2C_Handle);
 #endif /* MCAL_I2C_ATMEGA32_I2C_H_ */
