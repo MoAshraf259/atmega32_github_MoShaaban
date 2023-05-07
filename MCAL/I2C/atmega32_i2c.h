@@ -35,8 +35,8 @@
 #define Busy_In_Rx		2
 
 
-#define I2C_Mode_Sync		1
-#define I2C_Mode_Async		0
+#define I2C_Mode_Sync		0
+#define I2C_Mode_Async		1
 
 #define I2C_Ack_Disable		0
 #define I2C_Ack_Enable		1
@@ -50,6 +50,7 @@
 
 typedef struct
 {
+	uint8_t I2C_MS;
 	uint8_t I2C_Address;
 	uint8_t I2C_Mode;
 	uint8_t I2C_Prescaler;
@@ -74,6 +75,7 @@ void I2C_Init(I2C_Handle_t *pI2C_Handle);
 void I2C_MasterSendData(uint8_t *pTxBuffer,uint8_t Length,uint8_t Address);
 void I2C_MasterRecieveData(uint8_t *pRxBuffer,uint8_t Length, uint8_t Address);
 
+void I2C_GenerateStartCond(void);
 
 uint8_t I2C_MasterSendDataIT(I2C_Handle_t *pI2C_Handle,uint8_t *pRxBuffer,uint8_t Length , uint8_t Address);
 uint8_t I2C_MasterRecieveDataIT(I2C_Handle_t *pI2C_Handle,uint8_t *pRxBuffer,uint8_t Length, uint8_t Address);
