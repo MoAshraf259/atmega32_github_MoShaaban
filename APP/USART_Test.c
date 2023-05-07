@@ -11,7 +11,7 @@
 
 void Txapplication(void);
 void Rxapplication(void);
-void countingBytes(void);
+
 USART_Config_t USART1_Config;
 
 void USART_MainInit(void)
