@@ -55,6 +55,6 @@ typedef struct{
 
 
 void TIMER0_Init(void (*pCTC_ISR)(void),TIMER0_Config_t *pTIMER0_Config);
-void TIMER0_Delay_ms(void);
+void TIMER0_Delay_ms(uint32_t time);
 
 #endif /* MCAL_TIMER_ATMEGA32_TIMER0_H_ */

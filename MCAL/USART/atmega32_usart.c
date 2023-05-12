@@ -6,7 +6,7 @@
  */
 
 #include "atmega32_usart.h"
-
+#include "LCD.h"
 void (*USARTTxGlobalCallBack)(void)=NULL;
 void (*USARTRxGlobalCallBack)(void)=NULL;
 void (*USARTUDRCallBack)(void)=NULL;
@@ -17,7 +17,8 @@ void USART_Init(USART_Config_t *pUSARTConfig)
 
 	if( pUSARTConfig->SyncAsync == USART_Sync)
 	{
-		//Do nothing its default is sync
+		temp_reg &= ~(1<<USART_UCSRB_RXCIE);
+		temp_reg &= ~(1<<USART_UCSRB_TXCIE);
 	}
 	else if(pUSARTConfig->SyncAsync == USART_Async)
 	{
@@ -91,7 +92,6 @@ void USART_SendData(USART_Config_t *pUSARTConfig, uint8_t *pTxBuffer,uint8_t Len
 	//this pointer used for the 9 bit data length as the buffer is 8bits
 	//This will be needed for the extra bit
 	uint16_t *pdata;
-
 	//Wait until the Transmit buffer is empty
 	while ( ! USART_GetFlagStat(USART_UCSRA_UDRE));
 
@@ -129,6 +129,7 @@ void USART_SendData(USART_Config_t *pUSARTConfig, uint8_t *pTxBuffer,uint8_t Len
 		Length--;
 
 	}
+
 }
 
 void USART_RecieveData(USART_Config_t *pUSARTConfig, uint8_t *pRxBuffer , uint8_t Length)

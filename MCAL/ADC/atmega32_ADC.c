@@ -44,7 +44,7 @@ void ADMUX_CLEAR(void)
 	ADC->ADMUX &= ~(0x11111);
 }
 
-void ADC_StartConversionAsync(uint8_t ChannelNumber)
+void ADC_StartConversionSync(uint8_t ChannelNumber)
 {
 	ADMUX_CLEAR();
 	ADC->ADMUX |= (ChannelNumber<<ADC_ADMUX_MUX0);
@@ -58,7 +58,7 @@ void ADC_StartConversionAsync(uint8_t ChannelNumber)
 	ADC->ADCSRA |= (1<<ADC_ADCSRA_ADIF);
 	//You have to clear the flag manually because it`s only cleared when the ISR is excuted
 }
-void ADC_StartConversionSync(uint8_t ChannelNumber)
+void ADC_StartConversionAsync(uint8_t ChannelNumber)
 {
 	ADMUX_CLEAR();
 	ADC->ADMUX |= (ChannelNumber<<ADC_ADMUX_MUX0);

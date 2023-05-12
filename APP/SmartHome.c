@@ -133,16 +133,14 @@ void USART_RXApp(void)
 	static uint8_t flag=0;
 	static uint8_t wrong=0;
 	RxMsg=USART->UDR;
-	if(flag!=3 && wrong==0)
-	{
+	if(flag!=3 && wrong==0){
 	if(flag==0)
 	{
 		if(RxMsg=='1')
-		{
-			flag++;
-		}
-		else
-		{
+			{
+				flag++;
+			}
+		else{
 			wrong++;
 		}
 	}
@@ -152,8 +150,7 @@ void USART_RXApp(void)
 		{
 			flag++;
 		}
-		else
-		{
+		else{
 			wrong++;
 		}
 	}
@@ -219,5 +216,5 @@ void TIMER1_InterruptApp(void)
 
 void USART_TXApp(void)
 {
-
+	//USART_SendData(&USART1_Config, startup, sizeof(startup));
 }

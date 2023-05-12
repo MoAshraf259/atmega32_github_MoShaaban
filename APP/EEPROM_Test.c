@@ -2,12 +2,14 @@
  * EEPROM_Test.c
  *
  *  Created on: May 7, 2023
- *      Author: moham
+ *      Author: MohamedAshraf
  */
 #include "atmega32.h"
 #include "LCD.h"
 #include "EEPROM.h"
-uint8_t Buffer;
+
+uint8_t Buffer1,Buffer2;
+
 I2C_Handle_t I2C_Handle;
 void I2C_MainInit(void)
 {
@@ -20,17 +22,26 @@ void I2C_MainInit(void)
 	I2C_Init(&I2C_Handle);
 }
 
+
+
 int main(void)
 {
+	LCD_Init();
+
 	I2C_MainInit();
 
-	EEPROM_SendToData(52, 100, EEPROM_PAGE1);
-	EEPROM_ReceiveFromData(&Buffer, 100, EEPROM_PAGE1);
-	LCD_SendNumber(Buffer);
+	EEPROM_SendToData(44,50);
+	EEPROM_SendToData(3,51);
+
+
+
+	EEPROM_ReceiveFromData(&Buffer2, 51,1);
+	EEPROM_ReceiveFromData(&Buffer1,50,1);
+
+	LCD_SendNumber(Buffer1);
 
 	lcd_set_cursor(2, 1);
 
-	EEPROM_SendToData(3, 24, EEPROM_PAGE2);
-	EEPROM_ReceiveFromData(&Buffer, 24, EEPROM_PAGE2);
-	LCD_SendNumber(Buffer);
+	LCD_SendNumber(Buffer2);
+
 }

@@ -308,5 +308,4 @@ void LCD_SendNumber(uint16_t number)
 
 	}
 
-
 }

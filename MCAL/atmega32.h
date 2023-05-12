@@ -8,7 +8,7 @@
 #ifndef DRIVERS_INC_ATMEGA32_H_
 #define DRIVERS_INC_ATMEGA32_H_
 
-#include <stdint.h>
+//#include <stdint.h>
 #include <util/delay.h>
 
 #define NULL	0
@@ -136,7 +136,8 @@ typedef struct
 	__vo uint8_t TWAR;
 	__vo uint8_t TWDR;
 }I2C_RegDef_t;
-#define I2C_TWCR		(*((__vo uint8_t*)0x56))
+
+#define TWCR		(*((__vo uint8_t*)0x56))
 
 //Use this to access the TIMERs interrupt registers
 #define TIMERInterrupt		((TIMERInterrupt_RegDef_t*)TIMERInterrupt_BASEADDR)
@@ -341,6 +342,7 @@ to control the Whole pin modes TO BE MORE GENERIC*/
 #define I2C_TWSR_TWS6			6
 #define I2C_TWSR_TWS7			7
 
+#define I2C_TWAR_TWGCE 	0
 #include "atmega32_DIO.h"
 #include "atmega32_ext_int.h"
 #include "atmega32_spi.h"

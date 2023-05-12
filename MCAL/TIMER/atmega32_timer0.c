@@ -17,7 +17,7 @@ void TIMER0_ClearPrescaler(void)
 
 
 
-void TIMER0_Init(void (*pCTC_ISR)(void),TIMER0_Config_t *pTIMER0_Config)
+void TIMER0_Init(void (*pFUNC_ISR)(void),TIMER0_Config_t *pTIMER0_Config)
 {
 	if(pTIMER0_Config->Waveform==TIMER0_Waveform_CTC)
 	{
@@ -59,7 +59,7 @@ void TIMER0_Init(void (*pCTC_ISR)(void),TIMER0_Config_t *pTIMER0_Config)
 	if(pTIMER0_Config->mode==TIMER0_Mode_Interrupt)
 	{
 		EnableGlobalInterrupt();
-
+		pTIMER0_GlobalApp=pFUNC_ISR;
 		TIMERInterrupt->TIMSK |= (pTIMER0_Config->InterruptMode<<TIMER_TIMSK_TOIE0);
 	}
 
@@ -68,12 +68,11 @@ void TIMER0_Init(void (*pCTC_ISR)(void),TIMER0_Config_t *pTIMER0_Config)
 
 }
 
-void TIMER0_Delay_ms(void)
+
+void TIMER0_Delay_ms(uint32_t time)
 {
-	uint64_t counter=0;
+
 }
-
-
 
 void __vector_10(void) __attribute__((signal));
 void __vector_10(void)
@@ -82,7 +81,15 @@ void __vector_10(void)
 	{
 		pTIMER0_GlobalApp();
 	}
-	Counter++;
+
 }
 
+void __vector_11(void) __attribute__((signal));
+void __vector_11(void)
+{
+	if(pTIMER0_GlobalApp != NULL)
+	{
+		pTIMER0_GlobalApp();
+	}
 
+}

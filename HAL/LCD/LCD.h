@@ -13,7 +13,7 @@
 
 
 #define Control_Port	DIOC
-#define LCD_DIO_PORT 	DIOB
+#define LCD_DIO_PORT 	DIOA
 
 #define LCD_PIN_0	BIT_NUM_0
 #define LCD_PIN_1	BIT_NUM_1
